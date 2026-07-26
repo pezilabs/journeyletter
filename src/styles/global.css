@@ -1,0 +1,175 @@
+/* Journeyletter — v1 typographic system. No client JS, no webfonts. */
+
+:root {
+  --paper: #faf9f6;
+  --ink: #1c1b19;
+  --ink-soft: #5c5850;
+  --rule: #e3e0d8;
+  --accent: #9a4a12;
+  --colophon-bg: #f1efe9;
+  --serif: 'Charter', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #191817;
+    --ink: #e8e5df;
+    --ink-soft: #a39d92;
+    --rule: #322f2b;
+    --accent: #e08b4a;
+    --colophon-bg: #211f1d;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  flex: 1;
+}
+
+h1, h2, h3 {
+  font-family: var(--sans);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+h1 { font-size: 1.9rem; margin: 0 0 0.5rem; }
+h2 { font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  border-left: 3px solid var(--accent);
+  font-style: normal;
+}
+blockquote strong { font-family: var(--sans); font-size: 0.95em; }
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+
+code { font-family: var(--mono); font-size: 0.85em; }
+
+/* Site header / footer */
+.site-header {
+  font-family: var(--sans);
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.site-header .masthead {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.site-header nav { display: flex; gap: 1rem; }
+.site-header nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.site-header nav a:hover { color: var(--accent); }
+
+.site-footer {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  max-width: 42rem;
+  margin: 3rem auto 0;
+  padding: 1.25rem;
+  width: 100%;
+  border-top: 1px solid var(--rule);
+}
+.site-footer a { color: var(--ink-soft); }
+
+/* Piece list */
+.piece-list { list-style: none; padding: 0; margin: 2rem 0; }
+.piece-list li { margin: 0 0 2rem; }
+.piece-list .piece-date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.piece-list a.piece-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.piece-list a.piece-title:hover { color: var(--accent); }
+.piece-list .piece-desc { margin: 0.3rem 0 0; color: var(--ink-soft); }
+
+/* Piece page */
+.piece-lede {
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin: 0 0 0.75rem;
+}
+.piece-meta {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin: 0 0 2.5rem;
+}
+
+/* Colophon — the signature block */
+.colophon {
+  margin-top: 3.5rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--colophon-bg);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+.colophon h2 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+}
+.colophon dl { margin: 0; }
+.colophon dt {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-top: 0.9rem;
+}
+.colophon dt:first-child { margin-top: 0; }
+.colophon dd { margin: 0.15rem 0 0; color: var(--ink-soft); }
+.colophon .role-name { color: var(--ink); font-weight: 600; }

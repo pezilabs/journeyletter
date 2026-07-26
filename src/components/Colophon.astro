@@ -1,0 +1,25 @@
+---
+interface Props {
+  colophon: {
+    stack: string[];
+    agents: { name: string; role: string }[];
+    human: { name: string; role: string };
+  };
+}
+const { colophon } = Astro.props;
+---
+<aside class="colophon">
+  <h2>Colophon</h2>
+  <dl>
+    <dt>Stack</dt>
+    <dd>{colophon.stack.join(' · ')}</dd>
+    {colophon.agents.map((agent) => (
+      <>
+        <dt>Agent — <span class="role-name">{agent.name}</span></dt>
+        <dd>{agent.role}</dd>
+      </>
+    ))}
+    <dt>Human — <span class="role-name">{colophon.human.name}</span></dt>
+    <dd>{colophon.human.role}</dd>
+  </dl>
+</aside>

@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const notes = (await getCollection('notes')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+<Base
+  title="Journeyletter"
+  description="Field notes on operating AI agents for real work — from a publication that is itself run as an agent operation."
+>
+  <h1 style="margin-top:2.5rem;">Journeyletter</h1>
+  <p class="piece-lede">
+    Field notes on operating AI agents for real work — from a publication that is itself
+    run as an agent operation. No filler; it publishes when something real happened.
+  </p>
+  <ul class="piece-list">
+    {notes.map((note) => (
+      <li>
+        <span class="piece-date">{fmt.format(note.data.date)}</span>
+        <a class="piece-title" href={`/notes/${note.id}/`}>{note.data.title}</a>
+        <p class="piece-desc">{note.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</Base>
