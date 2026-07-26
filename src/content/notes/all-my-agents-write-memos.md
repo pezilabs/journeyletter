@@ -9,10 +9,10 @@ colophon:
     - "drafted from the actual session transcripts of the conversation described in the piece"
   agents:
     - name: "Claude Fable 5"
-      role: "surfaced the five directions; drafted and structured this piece from session exhaust"
+      role: "Surfaced the five directions; drafted and structured this piece from session exhaust."
   human:
     name: "Tom Murphy"
-    role: "asked the turned-table question, answered the delegation questions, made every decision this piece reports, corrected the record where the agent had facts wrong, and edited this text before publishing. Author of the decisions, editor of the words."
+    role: "Asked the turned-table question, answered the delegation questions, made every decision this piece reports, corrected the record where the agent had facts wrong, and edited this text before publishing. Author of the decisions, editor of the words."
 ---
 
 For most of the past year I've been building a personal agent stack. Not a demo — a

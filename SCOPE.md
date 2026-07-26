@@ -54,6 +54,8 @@ colophon:
     role: "author of the decisions, editor of the words"
 ```
 
+Convention: `role` values are full sentences — capitalized first letter, closing period.
+
 This makes the longitudinal experiment queryable: a future `/colophons` page charts the
 human role shrinking piece by piece. v1 renders the block; the chart page is v1.1.
 
