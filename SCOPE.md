@@ -83,9 +83,19 @@ few pieces have shipped manually — the overhead trap guard).
   Vercel, publish piece #1, post the LinkedIn companion (manual), vantage graduation
   note finalized.
 
-## Prerequisites (Tom, ~15 min total)
+## Prerequisites — all complete
 
-- [ ] Create the **pezilabs** GitHub org (web signup — can't be done via CLI).
-- [ ] Confirm Vercel account to use (personal, or fresh one for the LLC — LLC-owned
-      is consistent with the entity separation).
-- [ ] DreamHost DNS access handy for session 2.
+- [x] **pezilabs** GitHub org created; repo public at github.com/pezilabs/journeyletter.
+- [x] Vercel: deployed under the **pezilabs team** scope (LLC-owned).
+- [x] DNS: pezilabs.com nameservers → Vercel (ns1/ns2.vercel-dns.com); Vercel manages
+      all records + SSL.
+
+## Shipped (2026-07-26)
+
+Live at **https://pezilabs.com** — landing, `/notes/`, piece #1, about, RSS, HTTPS.
+Piece #1: `/notes/all-my-agents-write-memos/`.
+
+Still open:
+- [ ] Vercel GitHub App on the pezilabs org (web OAuth, Tom) → push-to-deploy. Until
+      then, deploys are `vercel deploy --prod` from this repo.
+- [ ] LinkedIn companion post (Tom's send — draft in vantage has the live link).
