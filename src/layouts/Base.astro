@@ -14,7 +14,8 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="alternate" type="application/rss+xml" title="Journeyletter" href="/notes/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Journeyletter — Notes" href="/notes/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Journeyletter — Letters" href="/letters/rss.xml" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
@@ -22,6 +23,7 @@ const { title, description } = Astro.props;
       <a class="masthead" href="/notes/">Journeyletter</a>
       <nav>
         <a href="/notes/">Notes</a>
+        <a href="/letters/">Letters</a>
         <a href="/about/">About</a>
         <a href="/notes/rss.xml">RSS</a>
       </nav>

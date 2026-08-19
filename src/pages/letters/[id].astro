@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import Colophon from '../../components/Colophon.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const letters = await getCollection('letters');
+  return letters.map((letter) => ({ params: { id: letter.id }, props: { letter } }));
+}
+
+const { letter } = Astro.props;
+const { Content } = await render(letter);
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+<Base title={`${letter.data.title} — Journeyletter`} description={letter.data.description}>
+  <article>
+    <h1 style="margin-top:2.5rem;">{letter.data.title}</h1>
+    <p class="piece-lede">{letter.data.description}</p>
+    <p class="piece-meta">{fmt.format(letter.data.date)} · Tom Murphy</p>
+    <Content />
+    <Colophon colophon={letter.data.colophon} />
+  </article>
+</Base>

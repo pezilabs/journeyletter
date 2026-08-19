@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const letters = (await getCollection('letters')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+<Base
+  title="Letters — Journeyletter"
+  description="Hand-first pieces — Tom's own drafts, structured and edited, not generated from exhaust."
+>
+  <h1 style="margin-top:2.5rem;">Letters</h1>
+  <p class="piece-lede">
+    The hand-first lane. Notes starts from session exhaust and gets edited; a letter
+    starts as Tom's own draft and gets structured. Same masthead, different origin.
+  </p>
+  <ul class="piece-list">
+    {letters.map((letter) => (
+      <li>
+        <span class="piece-date">{fmt.format(letter.data.date)}</span>
+        <a class="piece-title" href={`/letters/${letter.id}/`}>{letter.data.title}</a>
+        <p class="piece-desc">{letter.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</Base>
