@@ -1,0 +1,12 @@
+---
+interface Props {
+  items: { href: string; title: string; description: string; date: Date; lane: string }[];
+}
+const { items } = Astro.props;
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+<ol class="recent">
+  {items.map((p) => (
+    <li><a href={p.href}><time class="d mono" datetime={p.date.toISOString().slice(0, 10)}>{fmt.format(p.date)}</time><span class="k mono">{p.lane}</span><span class="t"><span>{p.title}</span></span><span class="arrow" aria-hidden="true">→</span><span class="desc">{p.description}</span></a></li>
+  ))}
+</ol>

@@ -1,11 +1,20 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Block from '../../components/Block.astro';
 ---
 <Base
-  title="How the Journeyletter works"
+  title="How the Journeyletter works · Pezi Labs"
   description="What the Journeyletter is and the four rules it runs under."
+  crumbs={[{ href: '/writing/', label: 'Journeyletter' }, { label: 'How it works' }]}
 >
-  <h1 style="margin-top:2.5rem;">How the Journeyletter works</h1>
+  <PageHead num="Writing" label="Journeyletter" title="How the Journeyletter works" />
+
+  <section class="section" style="padding-top:var(--s6)">
+    <div class="wrap">
+      <div class="grid block">
+        <div class="c-label label mono"><b>00</b><span>About</span></div>
+        <div class="copy">
   <p>
     The Journeyletter is field notes on operating AI agents for real work, written for
     serious agent-builders. It documents one practitioner's stack — the delegation
@@ -18,33 +27,30 @@ import Base from '../../layouts/Base.astro';
     the opposite origin: Tom's own draft first, structured and edited from there. Both are
     real, both carry a colophon; they differ in where the first draft came from.
   </p>
-  <p>The four rules, as they apply to Notes:</p>
+          <p>The four rules, as they apply to Notes:</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <h2>Exhaust, not authorship</h2>
-  <p>
-    Nobody sits down to "write a post." The work happens; an agent harvests the exhaust —
+  <Block num="01" label="Rule" title="Exhaust, not authorship" id="r1">
+    <p>Nobody sits down to "write a post." The work happens; an agent harvests the exhaust —
     repo history, decision records, session transcripts — and surfaces when there's a
-    piece worth making. A publication that demands homework from its author dies.
-  </p>
-
-  <h2>Cadence by accumulation</h2>
-  <p>
-    It publishes when there's something real, not on a calendar. No filler, ever. If you
-    don't hear from it, nothing worth your time happened.
-  </p>
-
-  <h2>The wall</h2>
-  <p>
-    Patterns, struggles, and learnings cross into these pieces. Personal data never does
+    piece worth making. A publication that demands homework from its author dies.</p>
+  </Block>
+  <Block num="02" label="Rule" title="Cadence by accumulation" id="r2">
+    <p>It publishes when there's something real, not on a calendar. No filler, ever. If you
+    don't hear from it, nothing worth your time happened.</p>
+  </Block>
+  <Block num="03" label="Rule" title="The wall" id="r3">
+    <p>Patterns, struggles, and learnings cross into these pieces. Personal data never does
     — health, family, and finances stay categorically behind the wall, filtered out at
-    the harvest stage before a draft exists. Field notes, not oversharing.
-  </p>
-
-  <h2 id="colophons">Full transparency</h2>
-  <p>
-    Every piece ends with a colophon naming the stack, the agents that did the work, and
+    the harvest stage before a draft exists. Field notes, not oversharing.</p>
+  </Block>
+  <Block num="04" label="Rule" title="Full transparency" id="colophons">
+    <p>Every piece ends with a colophon naming the stack, the agents that did the work, and
     exactly what the human did. The colophons are structured data, and over time they are
     the experiment: watch the human's role shrink from author to editor to mentor, piece
-    by piece, with receipts.
-  </p>
+    by piece, with receipts.</p>
+  </Block>
 </Base>

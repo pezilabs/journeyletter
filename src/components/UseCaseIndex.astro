@@ -1,0 +1,61 @@
+---
+import { catalogue, pad2, href, statusClass, groups, type UseCase } from '../usecases';
+
+interface Props {
+  items: UseCase[];
+  footer?: boolean;
+}
+const { items, footer = false } = Astro.props;
+
+const grouped = groups
+  .map((g) => ({ ...g, rows: items.filter((uc) => (g.statuses as readonly string[]).includes(uc.data.status)) }))
+  .filter((g) => g.rows.length > 0);
+const count = (s: string) => items.filter((uc) => uc.data.status === s).length;
+const tally = (['productizing', 'in daily use', 'product', 'retired'] as const)
+  .map((s) => ({ s, n: count(s) }))
+  .filter((t) => t.n > 0);
+---
+<div class="grid tally-row">
+<div class="tally mono">
+  <dl class="tally-dl" aria-label="Use cases by status">
+    <div class="total"><dt class="vh">Total</dt><dd><span class="n">{pad2(items.length)}</span> use cases</dd></div>
+    {tally.map((t) => (
+      <div><dt class="vh">{t.s}</dt><dd class={`st ${statusClass[t.s]}`}><span><span class="n">{pad2(t.n)}</span> {t.s}</span></dd></div>
+    ))}
+  </dl>
+</div>
+</div>
+
+<table class="index">
+  <caption class="vh">Use cases, grouped by status</caption>
+  <thead>
+    <tr>
+      <th scope="col" class="c-no">No.</th>
+      <th scope="col" class="c-title">Use case</th>
+      <th scope="col" class="c-need">Need</th>
+      <th scope="col" class="c-for">For</th>
+      <th scope="col" class="c-status">Status</th>
+      <th scope="col" class="c-stack stack">Stack</th>
+      <th scope="col" class="c-start">Started</th>
+    </tr>
+  </thead>
+  {grouped.map((g) => (
+    <tbody>
+      <tr class="grp"><th colspan="7" scope="rowgroup" class="mono"><span class={`st ${g.cls}`}>{g.label}</span><span class="cnt">{pad2(g.rows.length)}</span></th></tr>
+      {g.rows.map((uc) => (
+        <tr class="row real">
+          <td class="no">{catalogue(uc.data.number)}</td>
+          <td class="title"><a href={href(uc)}>{uc.data.title}<span class="arrow" aria-hidden="true">→</span></a></td>
+          <td class="need">{uc.data.summary}</td>
+          <td class="for">{uc.data.for}</td>
+          <td class="status"><span class={`st ${statusClass[uc.data.status]}`}>{uc.data.status}</span></td>
+          <td class="stack">{uc.data.stack.join(' · ')}</td>
+          <td class="start">{uc.data.started ? uc.data.started.getUTCFullYear() : ''}</td>
+        </tr>
+      ))}
+    </tbody>
+  ))}
+</table>
+{footer && (
+  <div class="idx-foot mono"><span>Grouped by status. Retired work stays listed.</span><a href="/apps/">All household applications <span class="arrow" aria-hidden="true">→</span></a></div>
+)}

@@ -5,8 +5,9 @@ import { contact } from '../site';
 interface Props {
   title: string;
   description: string;
+  crumbs?: { href?: string; label: string }[];
 }
-const { title, description } = Astro.props;
+const { title, description, crumbs } = Astro.props;
 
 const nav = [
   { href: '/apps/', label: 'Apps' },
@@ -17,6 +18,7 @@ const nav = [
 const path = Astro.url.pathname;
 const isCurrent = (item: (typeof nav)[number]) =>
   [item.href, ...(item.also ?? [])].some((p) => path.startsWith(p));
+const cols = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
 ---
 <!doctype html>
 <html lang="en">
@@ -25,30 +27,60 @@ const isCurrent = (item: (typeof nav)[number]) =>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet" />
     <link rel="alternate" type="application/rss+xml" title="Journeyletter — Notes" href="/notes/rss.xml" />
     <link rel="alternate" type="application/rss+xml" title="Journeyletter — Letters" href="/letters/rss.xml" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   </head>
   <body>
-    <header class="site-header">
-      <a class="masthead" href="/">Pezi Labs</a>
-      <nav>
-        {nav.map((item) => (
-          <a href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>{item.label}</a>
-        ))}
-      </nav>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <div class="overlay" aria-hidden="true"><div class="wrap"><div class="grid">{cols.map(() => <span />)}</div></div></div>
+
+    <header class="masthead">
+      <div class="wrap">
+        <div class="grid">
+          <a class="wordmark" href="/" aria-label="Pezi Labs, home"><i aria-hidden="true"></i>Pezi Labs</a>
+          <nav class="nav" aria-label="Primary">
+            {nav.map((item) => (
+              <a href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>{item.label}</a>
+            ))}
+            <label class="switch mono"><input type="checkbox" id="gridswitch" /><span>Grid</span></label>
+          </nav>
+        </div>
+        <div class="grid ruler" aria-hidden="true">{cols.map((c) => <span>{c}</span>)}</div>
+        {crumbs && (
+          <nav class="crumbs mono" aria-label="Breadcrumb">
+            <ol>
+              {crumbs.map((c) => (
+                <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+              ))}
+            </ol>
+          </nav>
+        )}
+      </div>
     </header>
-    <main>
+
+    <main id="main">
       <slot />
     </main>
-    <footer class="site-footer">
-      <span>© 2026 Pezi Labs LLC · New Hampshire</span>
-      <span class="footer-links">
-        {contact.email && <a href={`mailto:${contact.email}`}>Email</a>}
-        {contact.linkedin && <a href={contact.linkedin}>LinkedIn</a>}
-        <a href={contact.github}>GitHub</a>
-        <a href="/notes/rss.xml">RSS</a>
-      </span>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="grid mono">
+          <p class="f-copy">© 2026 Pezi Labs LLC</p>
+          <p class="f-place">New Hampshire</p>
+          <ul class="f-links" aria-label="Elsewhere">
+            {contact.email && <li><a href={`mailto:${contact.email}`}>Email</a></li>}
+            {contact.linkedin && <li><a href={contact.linkedin}>LinkedIn</a></li>}
+            <li><a href={contact.github}>GitHub</a></li>
+            <li><a href="/notes/rss.xml">RSS</a></li>
+          </ul>
+          <p class="f-colophon">Set in Instrument Sans and IBM Plex Mono, on a 12-column grid.</p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

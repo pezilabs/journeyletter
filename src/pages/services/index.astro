@@ -1,48 +1,64 @@
 ---
 import Base from '../../layouts/Base.astro';
-import UseCaseList from '../../components/UseCaseList.astro';
-import { getCollection } from 'astro:content';
+import PageHead from '../../components/PageHead.astro';
+import Block from '../../components/Block.astro';
+import UseCaseIndex from '../../components/UseCaseIndex.astro';
+import { useCases } from '../../usecases';
+import { contact } from '../../site';
 
-const clients = await getCollection('usecases', (uc) => uc.data.line === 'service');
+const clients = await useCases('service');
 ---
 <Base
-  title="Services — Pezi Labs"
+  title="Services · Pezi Labs"
   description="Help for owner-run businesses with the problems behind the website."
 >
-  <h1 style="margin-top:2.5rem;">Services</h1>
-  <p class="piece-lede">
-    I work with owner-run businesses, mostly small and mid-sized, on the problems behind the
-    website.
-  </p>
+  <PageHead
+    num="Services"
+    label="For owner-run businesses"
+    title="The problems behind the website"
+    lede="I work with owner-run businesses, mostly small and mid-sized, on the problems behind the website."
+  />
 
-  <h2>The kind of problems I help with</h2>
-  <ul>
-    <li>Bookings and sign-ups that live in three different places.</li>
-    <li>Inventory tracked on paper, or in a spreadsheet nobody quite trusts.</li>
-    <li>A website the owner can't update without calling someone.</li>
-    <li>Tools that don't talk to each other, so people copy things by hand.</li>
-  </ul>
-  <p>
-    A website is often the first step. It's rarely the whole answer.
-  </p>
+  <Block num="01" label="Problems" title="The kind of problems I help with" id="h-problems">
+    <ul>
+      <li>Bookings and sign-ups that live in three different places.</li>
+      <li>Inventory tracked on paper, or in a spreadsheet nobody quite trusts.</li>
+      <li>A website the owner can't update without calling someone.</li>
+      <li>Tools that don't talk to each other, so people copy things by hand.</li>
+    </ul>
+    <p>A website is often the first step. It's rarely the whole answer.</p>
+  </Block>
 
-  <h2>How it works</h2>
-  <p>
-    First I learn how the business actually runs, from the people who run it. Then I propose
-    what to change, in plain language, with what it costs. Then I build it, one piece at a
-    time, so you're never waiting months to see something work.
-  </p>
+  <Block num="02" label="Process" title="How it works" id="h-process">
+    <p>
+      First I learn how the business actually runs, from the people who run it. Then I propose
+      what to change, in plain language, with what it costs. Then I build it, one piece at a
+      time, so you're never waiting months to see something work.
+    </p>
+  </Block>
 
   {clients.length > 0 && (
-    <section>
-      <h2>Client work</h2>
-      <UseCaseList items={clients} base="/services/" />
+    <section class="section" aria-labelledby="h-clients">
+      <div class="wrap">
+        <div class="grid section-head">
+          <div class="c-label label mono"><b>03</b><span>Index</span></div>
+          <h2 id="h-clients" class="c-main h2">Client work</h2>
+        </div>
+        <UseCaseIndex items={clients} />
+      </div>
     </section>
   )}
 
-  <h2>Talk to me</h2>
-  <p>
-    If something here sounds like your business, <a href="/about/#contact">get in touch</a>.
-    The first conversation is just that: a conversation.
-  </p>
+  <section class="section cta" aria-labelledby="h-cta">
+    <div class="wrap">
+      <div class="grid">
+        <div class="c-label label mono"><b>→</b><span>Contact</span></div>
+        <h2 id="h-cta" class="h2">If this sounds like your business, let's talk.</h2>
+        <div class="cta-row">
+          <a class="btn" href={`mailto:${contact.email}?subject=Services`}>Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="mono">The first conversation is just that: a conversation.</span>
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>

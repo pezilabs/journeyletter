@@ -31,8 +31,10 @@ const letters = defineCollection({
 // Use cases: every project gets one, in whichever section it belongs to
 // (`line`). Depth varies; the core fields are the same for all of them.
 const usecases = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/usecases' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/usecases' }),
   schema: z.object({
+    // Catalogue number: stable once assigned, shown as 001, UC-001.
+    number: z.number().int().positive(),
     title: z.string(),
     summary: z.string(),
     line: z.enum(['household', 'service']),
