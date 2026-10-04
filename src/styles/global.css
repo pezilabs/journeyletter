@@ -192,6 +192,24 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 .card:hover .arrow{transform:translateX(4px)}
 @media (max-width:900px){ .practice{grid-template-columns:1fr;row-gap:var(--s4)} .card p{max-width:52ch} }
 
+/* 04 Writing: two lanes side by side, latest three of each */
+.lanes{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--gutter);row-gap:var(--s5)}
+.lane{padding-top:var(--s2);border-top:1px solid var(--ink);display:flex;flex-direction:column;gap:12px;min-width:0}
+.lane .idx{display:flex;justify-content:space-between;color:var(--ink-3)}
+.lane h3{font-size:var(--t-h3);line-height:1.2;font-weight:600;letter-spacing:-.015em;margin-top:var(--s3)}
+.lane h3 a:hover{color:var(--signal)}
+.lane > p{color:var(--ink-2);max-width:60ch;text-wrap:pretty}
+.lane ol{margin-top:var(--s2);border-top:1px solid var(--rule)}
+.lane li a{display:flex;flex-direction:column;gap:6px;padding:20px 0;border-bottom:1px solid var(--rule)}
+.lane li time{color:var(--ink-3);font-size:var(--t-meta)}
+.lane li .t{font-size:var(--t-lead);line-height:1.3;letter-spacing:-.012em;font-weight:500;text-wrap:pretty}
+.lane li .t span{background:linear-gradient(var(--signal),var(--signal)) 0 100% / 0 1px no-repeat;transition:background-size .3s cubic-bezier(.2,.7,.2,1)}
+.lane li a:hover .t span{background-size:100% 1px}
+.lane li .dek{color:var(--ink-2);font-size:var(--t-small);line-height:1.5;max-width:52ch;text-wrap:pretty;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lane .go{margin-top:auto;padding-top:var(--s3);color:var(--ink-3);display:flex;justify-content:space-between}
+.lane .go:hover{color:var(--signal)}
+@media (max-width:900px){ .lanes{grid-template-columns:1fr} }
+
 /* 03 Index of use cases */
 .index{width:100%;border-collapse:collapse;font-size:.9375rem;line-height:1.45;table-layout:fixed}
 .index th.c-no{width:5%}
@@ -199,17 +217,15 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 .index th.c-need{width:31%}
 .index th.c-for{width:19%}
 .index th.c-status{width:11.5%}
-.index th.c-stack{width:13%}
-.index th.c-start{width:7.5%}
+.index th.c-stack{width:20.5%}
 .index thead th{font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);text-align:left;padding:0 16px 10px 0;border-bottom:1px solid var(--ink);vertical-align:bottom}
-.index thead th:last-child,.index td:last-child{text-align:right;padding-right:0}
+.index thead th:last-child,.index td:last-child{padding-right:0}
 .index .grp th{text-align:left;padding:40px 0 10px;border-bottom:1px solid var(--rule-2);font-weight:500;color:var(--ink)}
 .index tbody:first-of-type .grp th{padding-top:20px}
-.index .grp .cnt{float:right;color:var(--ink-3);font-weight:400}
 .index td{padding:15px 16px 15px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
 .index td.no{font-family:var(--mono);font-size:var(--t-meta);color:var(--ink-3);padding-top:17px}
 .index td.title{color:var(--ink);font-weight:600;font-size:1rem;letter-spacing:-.01em}
-.index td.start,.index td.stack{font-family:var(--mono);font-size:var(--t-meta);padding-top:17px}
+.index td.stack{font-family:var(--mono);font-size:var(--t-meta);padding-top:17px}
 .index td.status{font-size:var(--t-small);color:var(--ink)}
 .index tr.row{position:relative;transition:background .15s}
 .index tr.real:hover{background:var(--signal-wash)}
@@ -246,8 +262,6 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
   .index td.need{grid-column:2 / -1}
   .index td.for{grid-column:2 / -1;font-size:var(--t-small);color:var(--ink-3)}
   .index td.for::before{content:"For ";font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
-  .index td.start{grid-column:2 / -1;text-align:left!important;padding:0}
-  .index td.start::before{content:"Started ";text-transform:uppercase;letter-spacing:.04em;font-size:11px}
 }
 
 /* 04 Recent */
@@ -490,4 +504,3 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 /* Writing list: the Recent row, with a description line */
 .recent .desc{grid-column:6 / span 6;grid-row:2;margin-top:6px;font-size:var(--t-small);line-height:1.5;color:var(--ink-3)}
 @media (max-width:720px){ .recent .desc{grid-column:1 / -1;grid-row:3;margin-top:0} }
-.index td.start:empty{display:none}
