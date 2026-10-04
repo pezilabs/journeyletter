@@ -263,7 +263,7 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 
 /* 04 Recent */
 .recent{border-top:1px solid var(--ink)}
-.recent li a{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter);align-items:baseline;padding:18px 0;border-bottom:1px solid var(--rule);transition:background .15s}
+.recent li a{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gutter);align-items:baseline;padding:18px 0;transition:background .15s}
 .recent .d{grid-column:1 / span 3;color:var(--ink-3)}
 .recent .k{grid-column:4 / span 2;color:var(--ink-3)}
 .recent .k.uc{color:var(--signal)}
@@ -318,10 +318,9 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 .spec-h{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--rule-2);color:var(--ink-3)}
 .spec-h strong{font-weight:500;color:var(--ink)}
 .spec dl{display:grid;grid-template-columns:88px 1fr}
-.spec dt,.spec dd{padding:12px 0;border-bottom:1px solid var(--rule)}
+.spec dt,.spec dd{padding:12px 0}
 .spec dt{color:var(--ink-3);padding-top:14px}
 .spec dd{font-size:var(--t-small);line-height:1.45;color:var(--ink)}
-.spec dt:nth-last-of-type(1),.spec dd:last-of-type{border-bottom:0}
 .spec ul li{display:flex;gap:8px}
 .spec ul li::before{content:"";flex:none;width:5px;height:1px;background:var(--ink-3);margin-top:.72em}
 .life{display:grid;gap:5px;margin-top:12px;padding-left:2px}
@@ -442,8 +441,8 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 @media (max-width:720px){ .block .h2,.block .copy{grid-column:1 / -1} }
 .copy a,.prose a{color:var(--ink);background:linear-gradient(var(--signal),var(--signal)) 0 100% / 100% 1px no-repeat;transition:background-size .2s}
 .copy a:hover,.prose a:hover{background-size:100% 2px;color:var(--signal)}
-.copy ul{display:grid;border-top:1px solid var(--rule)}
-.copy ul li{padding:12px 0 12px 28px;border-bottom:1px solid var(--rule);position:relative}
+.copy ul{display:grid}
+.copy ul li{padding:12px 0 12px 28px;position:relative}
 .copy ul li::before{content:"";position:absolute;left:0;top:1.3em;width:14px;height:1px;background:var(--signal)}
 
 /* Use-case body from markdown: a 12-column grid; each h2 carries its section number */
@@ -453,8 +452,9 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 .uc-prose > h2{counter-increment:sec;grid-column:1 / -1;max-width:none;margin-top:var(--section);margin-bottom:var(--s1);display:grid;grid-template-columns:calc((100% - 11 * var(--gutter)) / 12 * 3 + 2 * var(--gutter)) 1fr;column-gap:var(--gutter);align-items:baseline;font-size:var(--t-h2);line-height:1.08;font-weight:600;letter-spacing:-.028em;font-variation-settings:"wdth" 88}
 .uc-prose > h2::before{content:counter(sec,decimal-leading-zero);font-family:var(--mono);font-size:var(--t-meta);font-weight:500;letter-spacing:.01em;color:var(--signal);font-variation-settings:normal}
 .uc-prose > h2:first-child{margin-top:var(--s7)}
-.uc-prose > ul{display:grid;border-top:1px solid var(--rule)}
-.uc-prose > ul li{padding:12px 0;border-bottom:1px solid var(--rule);font-size:1.0625rem}
+.uc-prose > ul{display:grid}
+.uc-prose > ul li{padding:12px 0 12px 28px;font-size:1.0625rem;position:relative}
+.uc-prose > ul li::before{content:"";position:absolute;left:0;top:1.3em;width:14px;height:1px;background:var(--signal)}
 .uc-prose > .fig{grid-column:1 / -1;max-width:none;margin-top:var(--s6)}
 @media (max-width:1100px){ .uc-prose > *{grid-column:4 / -1} }
 @media (max-width:720px){
@@ -498,13 +498,12 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 .colophon .spec-h a{font-weight:500;color:var(--ink)}
 .colophon .spec-h a:hover{color:var(--signal)}
 .colophon dl{display:grid;grid-template-columns:minmax(120px,30%) 1fr}
-.colophon dt,.colophon dd{padding:12px 0;border-bottom:1px solid var(--rule)}
+.colophon dt,.colophon dd{padding:12px 0}
 .colophon dt{color:var(--ink-3);padding-right:16px}
 .colophon dt .who{display:block;color:var(--ink);margin-top:2px}
 .colophon dd{font-family:var(--sans);font-size:var(--t-small);line-height:1.5;color:var(--ink-2)}
-.colophon dt:last-of-type,.colophon dd:last-of-type{border-bottom:0}
 @media (max-width:1100px){ .colophon{grid-column:4 / -1} }
-@media (max-width:720px){ .colophon{grid-column:1 / -1} .colophon dl{grid-template-columns:1fr} .colophon dt{border-bottom:0;padding-bottom:0} }
+@media (max-width:720px){ .colophon{grid-column:1 / -1} .colophon dl{grid-template-columns:1fr} .colophon dt{padding-bottom:0} }
 
 /* Writing list: the Recent row, with a description line */
 .recent .desc{grid-column:6 / span 6;grid-row:2;margin-top:6px;font-size:var(--t-small);line-height:1.5;color:var(--ink-3)}
