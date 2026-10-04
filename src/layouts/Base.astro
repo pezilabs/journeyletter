@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import { contact } from '../site';
 
 interface Props {
   title: string;
@@ -72,12 +71,6 @@ const cols = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0')
         <div class="grid mono">
           <p class="f-copy">© 2026 Pezi Labs LLC</p>
           <p class="f-place">New Hampshire</p>
-          <ul class="f-links" aria-label="Elsewhere">
-            {contact.email && <li><a href={`mailto:${contact.email}`}>Email</a></li>}
-            {contact.linkedin && <li><a href={contact.linkedin}>LinkedIn</a></li>}
-            <li><a href={contact.github}>GitHub</a></li>
-            <li><a href="/notes/rss.xml">RSS</a></li>
-          </ul>
           <p class="f-colophon">Set in Instrument Sans and IBM Plex Mono, on a 12-column grid.</p>
         </div>
       </div>

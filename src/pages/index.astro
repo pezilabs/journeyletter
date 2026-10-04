@@ -4,6 +4,7 @@ import UseCaseIndex from '../components/UseCaseIndex.astro';
 import { getCollection } from 'astro:content';
 import { useCases } from '../usecases';
 import { pieces } from '../pieces';
+import { contact } from '../site';
 
 const all = await useCases();
 const household = all.filter((uc) => uc.data.line === 'household');
@@ -122,10 +123,23 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     </div>
   </section>
 
-  <section class="section" aria-label="About">
+  <section class="section connect" aria-labelledby="h-connect">
     <div class="wrap">
+      <div class="grid section-head">
+        <div class="c-label label mono"><b>05</b><span>Connect</span></div>
+        <h2 id="h-connect" class="vh">Connect</h2>
+      </div>
       <div class="grid">
-        <a class="more" href="/about/">More about me and how I work. <span class="arrow" aria-hidden="true">→</span></a>
+        <p class="c-text connect-lead">Most of my work starts with a conversation. If you run a business and something behind the website is slowing you down, or you're curious about one of the household apps, I'd like to hear about it.</p>
+        <div class="cta-row">
+          <a class="btn btn-solid" href={contact.calendly}>Book a call <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-quiet" href={`mailto:${contact.email}`}>{contact.email} <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <ul class="connect-links mono" aria-label="Elsewhere">
+          <li><a href={contact.linkedin}>LinkedIn</a></li>
+          <li><a href={contact.github}>GitHub</a></li>
+          <li><a href="/about/">More about me and how I work <span class="arrow" aria-hidden="true">→</span></a></li>
+        </ul>
       </div>
     </div>
   </section>

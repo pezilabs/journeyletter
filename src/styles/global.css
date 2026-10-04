@@ -147,13 +147,10 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 .footer .grid{border-top:1px solid var(--ink);padding-top:var(--s2);row-gap:var(--s2);color:var(--ink-2)}
 .f-copy{grid-column:1 / span 3}
 .f-place{grid-column:4 / span 3}
-.f-links{grid-column:7 / -1;display:flex;flex-wrap:wrap;gap:6px 24px}
-.f-links a{color:var(--ink);background:linear-gradient(var(--signal),var(--signal)) 0 100% / 0 1px no-repeat;transition:background-size .25s cubic-bezier(.2,.7,.2,1)}
-.f-links a:hover{background-size:100% 1px}
 .f-colophon{grid-column:7 / -1;color:var(--ink-3)}
 @media (max-width:720px){
   .f-copy{grid-column:1 / span 6}.f-place{grid-column:7 / -1}
-  .f-links,.f-colophon{grid-column:1 / -1}
+  .f-colophon{grid-column:1 / -1}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -284,10 +281,17 @@ a:hover .arrow,a:focus-visible .arrow{transform:translateX(4px)}
 }
 
 /* About link */
-.more{grid-column:4 / -1;font-size:var(--t-h2);line-height:1.1;font-weight:600;letter-spacing:-.028em;font-variation-settings:"wdth" 88;display:inline-flex;gap:.35em;align-items:baseline;justify-self:start;padding-bottom:6px;background:linear-gradient(var(--ink),var(--ink)) 0 100% / 100% 1px no-repeat;transition:background .25s}
-.more .arrow{color:var(--signal)}
-.more:hover{background-image:linear-gradient(var(--signal),var(--signal));background-size:100% 3px}
-@media (max-width:720px){ .more{grid-column:1 / -1;display:inline;padding-bottom:4px;background-size:0 0} .more:hover{background-size:0 0} }
+/* 05 Connect */
+.connect-lead{font-size:var(--t-h3);line-height:1.4;letter-spacing:-.012em;color:var(--ink);text-wrap:pretty}
+.connect .cta-row{margin-top:var(--s4)}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--signal);border-color:var(--signal)}
+.btn-solid:hover .arrow{color:var(--paper)}
+.btn-quiet{border-color:var(--rule-2);font-weight:500}
+.connect-links{grid-column:4 / -1;display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:var(--s4);color:var(--ink-3)}
+.connect-links a{color:var(--ink-2);background:linear-gradient(var(--signal),var(--signal)) 0 100% / 0 1px no-repeat;transition:background-size .25s cubic-bezier(.2,.7,.2,1)}
+.connect-links a:hover{background-size:100% 1px;color:var(--ink)}
+@media (max-width:720px){ .connect-links{grid-column:1 / -1} }
 
 /* ───────── Use case ───────── */
 
