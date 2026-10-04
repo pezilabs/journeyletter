@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const pieces = [
+  ...(await getCollection('notes')).map((p) => ({ ...p, lane: 'Note', base: '/notes/' })),
+  ...(await getCollection('letters')).map((p) => ({ ...p, lane: 'Letter', base: '/letters/' })),
+].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+<Base
+  title="Journeyletter — Pezi Labs"
+  description="Field notes on operating AI agents for real work, and letters drafted by hand."
+>
+  <h1 style="margin-top:2.5rem;">Journeyletter</h1>
+  <p class="piece-lede">
+    Field notes on operating AI agents for real work, and letters I draft by hand.
+  </p>
+  <p>
+    Two lanes, same masthead. <a href="/notes/">Notes</a> start from the exhaust of real work
+    and get edited. <a href="/letters/">Letters</a> start as my own draft and get structured.
+    Every piece ends with a colophon naming the stack, the agents, and what I did.
+    <a href="/writing/about/">How it works</a> · RSS for <a href="/notes/rss.xml">Notes</a>
+    and <a href="/letters/rss.xml">Letters</a>.
+  </p>
+  <ul class="piece-list">
+    {pieces.map((p) => (
+      <li>
+        <span class="piece-date">{fmt.format(p.data.date)} · {p.lane}</span>
+        <a class="piece-title" href={`${p.base}${p.id}/`}>{p.data.title}</a>
+        <p class="piece-desc">{p.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</Base>

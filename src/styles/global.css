@@ -173,3 +173,21 @@ code { font-family: var(--mono); font-size: 0.85em; }
 .colophon dt:first-child { margin-top: 0; }
 .colophon dd { margin: 0.15rem 0 0; color: var(--ink-soft); }
 .colophon .role-name { color: var(--ink); font-weight: 600; }
+
+/* Site frame: nav state, footer links, home, use cases */
+.site-header nav a[aria-current="page"] { color: var(--ink); }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1rem; }
+.site-footer .footer-links { display: flex; gap: 1rem; }
+.opening { margin: 3rem 0 1rem; font-size: 1.15rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.doors { display: grid; gap: 1.5rem; margin: 2.5rem 0; }
+.doors h2 { margin: 0 0 0.3rem; font-size: 1.1rem; }
+.doors h2 a { color: var(--ink); text-decoration: none; }
+.doors h2 a:hover { color: var(--accent); }
+.doors p { margin: 0; color: var(--ink-soft); }
+.usecase-facts { display: grid; grid-template-columns: max-content 1fr; gap: 0.3rem 1rem; margin: 1.5rem 0 2rem; padding: 1rem 1.25rem; background: var(--colophon-bg); border: 1px solid var(--rule); border-radius: 6px; font-family: var(--sans); font-size: 0.85rem; }
+.usecase-facts dt { font-weight: 700; }
+.usecase-facts dd { margin: 0; color: var(--ink-soft); }
+.usecase-cta { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: 0.95rem; }
+.site-header { flex-wrap: wrap; }
+.site-header .masthead { white-space: nowrap; }

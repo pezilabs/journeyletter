@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  items: CollectionEntry<'usecases'>[];
+  base: string;
+}
+const { items, base } = Astro.props;
+---
+<ul class="piece-list">
+  {items.map((uc) => (
+    <li>
+      <span class="piece-date">{uc.data.status}</span>
+      <a class="piece-title" href={`${base}${uc.id}/`}>{uc.data.title}</a>
+      <p class="piece-desc">{uc.data.summary}</p>
+    </li>
+  ))}
+</ul>

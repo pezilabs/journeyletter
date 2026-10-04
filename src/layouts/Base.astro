@@ -1,11 +1,22 @@
 ---
 import '../styles/global.css';
+import { contact } from '../site';
 
 interface Props {
   title: string;
   description: string;
 }
 const { title, description } = Astro.props;
+
+const nav = [
+  { href: '/apps/', label: 'Apps' },
+  { href: '/services/', label: 'Services' },
+  { href: '/writing/', label: 'Writing', also: ['/notes/', '/letters/'] },
+  { href: '/about/', label: 'About' },
+];
+const path = Astro.url.pathname;
+const isCurrent = (item: (typeof nav)[number]) =>
+  [item.href, ...(item.also ?? [])].some((p) => path.startsWith(p));
 ---
 <!doctype html>
 <html lang="en">
@@ -20,20 +31,24 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <header class="site-header">
-      <a class="masthead" href="/notes/">Journeyletter</a>
+      <a class="masthead" href="/">Pezi Labs</a>
       <nav>
-        <a href="/notes/">Notes</a>
-        <a href="/letters/">Letters</a>
-        <a href="/about/">About</a>
-        <a href="/notes/rss.xml">RSS</a>
+        {nav.map((item) => (
+          <a href={item.href} aria-current={isCurrent(item) ? 'page' : undefined}>{item.label}</a>
+        ))}
       </nav>
     </header>
     <main>
       <slot />
     </main>
     <footer class="site-footer">
-      Journeyletter is published by <a href="/">Pezi Labs</a> · written with agents, edited by
-      Tom Murphy · every piece carries a <a href="/about/#colophons">colophon</a>.
+      <span>© 2026 Pezi Labs LLC · New Hampshire</span>
+      <span class="footer-links">
+        {contact.email && <a href={`mailto:${contact.email}`}>Email</a>}
+        {contact.linkedin && <a href={contact.linkedin}>LinkedIn</a>}
+        <a href={contact.github}>GitHub</a>
+        <a href="/notes/rss.xml">RSS</a>
+      </span>
     </footer>
   </body>
 </html>

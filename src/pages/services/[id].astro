@@ -1,0 +1,11 @@
+---
+import UseCase from '../../components/UseCase.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const items = await getCollection('usecases', (uc) => uc.data.line === 'service');
+  return items.map((uc) => ({ params: { id: uc.id }, props: { uc } }));
+}
+const { uc } = Astro.props;
+---
+<UseCase uc={uc} />

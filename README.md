@@ -1,4 +1,9 @@
-# Journeyletter
+# Journeyletter and the Pezi Labs site
+
+This repo hosts [pezilabs.com](https://pezilabs.com): the studio's home page, its household
+applications and services (as use cases in `src/content/usecases/`), and the Journeyletter.
+
+## Journeyletter
 
 Field notes on operating AI agents for real work — from a publication that is itself run
 as an agent operation. Live at **[pezilabs.com/notes/](https://pezilabs.com/notes/)**,
