@@ -1,30 +1,85 @@
 ---
-// Minimal Pezi Labs landing. The Journeyletter is the public face for now;
-// this page exists so /notes/ URLs never move when the company site grows.
-import '../styles/global.css';
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const usecases = await getCollection('usecases');
+const household = usecases.filter((uc) => uc.data.line === 'household');
+const becoming = household.filter((uc) => uc.data.status === 'productizing');
+const notes = await getCollection('notes');
+const letters = await getCollection('letters');
+
+// Counts are only worth stating once they say something. Below that, the
+// doors describe the work instead of numbering it.
+const showCount = household.length >= 10;
+
+const recent = [
+  ...usecases.map((uc) => ({
+    date: uc.data.published,
+    title: uc.data.title,
+    href: `/${uc.data.line === 'household' ? 'apps' : 'services'}/${uc.id}/`,
+    kind: 'Use case',
+  })),
+  ...notes.map((n) => ({ date: n.data.date, title: n.data.title, href: `/notes/${n.id}/`, kind: 'Note' })),
+  ...letters.map((l) => ({ date: l.data.date, title: l.data.title, href: `/letters/${l.id}/`, kind: 'Letter' })),
+]
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf())
+  .slice(0, 5);
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pezi Labs</title>
-    <meta name="description" content="An independent product lab. Home of the Journeyletter." />
-    <link rel="alternate" type="application/rss+xml" title="Journeyletter" href="/notes/rss.xml" />
-  </head>
-  <body>
-    <main style="display:flex; flex-direction:column; justify-content:center; min-height:70vh;">
-      <h1 style="font-size:2.2rem; margin-bottom:0.5rem;">Pezi Labs</h1>
-      <p style="color:var(--ink-soft); max-width:34rem;">
-        An independent product lab. Ideas get proven in personal use first, then built
-        into products worth paying for.
+<Base
+  title="Pezi Labs"
+  description="A one-person studio run by Tom Murphy. Software built from real needs, starting at home."
+>
+  <section class="hero">
+    <h1>Real need first. Then the data decides what grows.</h1>
+    <p>
+      Pezi Labs is a one-person studio. I'm Tom Murphy, a user experience designer with more
+      than 25 years behind me, and right now I build working software for my own household.
+    </p>
+    <p>
+      Each app starts with a need someone in my house actually has. Daily use shows which ones
+      are worth more, and those become products.
+    </p>
+  </section>
+
+  <section class="doors">
+    <div>
+      <h2><a href="/apps/">Household applications</a></h2>
+      <p>
+        Small, specific apps for the people I live with, running privately on a computer in my
+        house.
+        {showCount
+          ? ` ${household.length} use cases so far, ${becoming.length} becoming products.`
+          : ` ${becoming.length === 1 ? 'One is' : `${becoming.length} are`} becoming a product.`}
       </p>
-      <p style="max-width:34rem;">
-        Currently publishing the <a href="/notes/"><strong>Journeyletter</strong></a> —
-        field notes on operating AI agents for real work, from a publication that is
-        itself run as an agent operation.
+    </div>
+    <div>
+      <h2><a href="/services/">Services</a></h2>
+      <p>
+        I work with owner-run businesses on the problems behind the website: bookings,
+        inventory, the spreadsheet everyone is afraid to touch.
       </p>
-    </main>
-    <footer class="site-footer">© 2026 Pezi Labs LLC · New Hampshire</footer>
-  </body>
-</html>
+    </div>
+    <div>
+      <h2><a href="/writing/">Writing</a></h2>
+      <p>
+        The Journeyletter. Field notes on running AI agents for real work, and letters I draft
+        by hand. {notes.length + letters.length} pieces so far.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Recent</h2>
+    <ul class="piece-list">
+      {recent.map((item) => (
+        <li>
+          <span class="piece-date">{fmt.format(item.date)} · {item.kind}</span>
+          <a class="piece-title" href={item.href}>{item.title}</a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <p><a href="/about/">More about me and how I work.</a></p>
+</Base>

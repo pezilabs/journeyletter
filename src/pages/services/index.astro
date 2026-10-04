@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import UseCaseList from '../../components/UseCaseList.astro';
+import { getCollection } from 'astro:content';
+
+const clients = await getCollection('usecases', (uc) => uc.data.line === 'service');
+---
+<Base
+  title="Services — Pezi Labs"
+  description="Help for owner-run businesses with the problems behind the website."
+>
+  <h1 style="margin-top:2.5rem;">Services</h1>
+  <p class="piece-lede">
+    I work with owner-run businesses, mostly small and mid-sized, on the problems behind the
+    website.
+  </p>
+
+  <h2>The kind of problems I help with</h2>
+  <ul>
+    <li>Bookings and sign-ups that live in three different places.</li>
+    <li>Inventory tracked on paper, or in a spreadsheet nobody quite trusts.</li>
+    <li>A website the owner can't update without calling someone.</li>
+    <li>Tools that don't talk to each other, so people copy things by hand.</li>
+  </ul>
+  <p>
+    A website is often the first step. It's rarely the whole answer.
+  </p>
+
+  <h2>How it works</h2>
+  <p>
+    First I learn how the business actually runs, from the people who run it. Then I propose
+    what to change, in plain language, with what it costs. Then I build it, one piece at a
+    time, so you're never waiting months to see something work.
+  </p>
+
+  {clients.length > 0 && (
+    <section>
+      <h2>Client work</h2>
+      <UseCaseList items={clients} base="/services/" />
+    </section>
+  )}
+
+  <h2>Talk to me</h2>
+  <p>
+    If something here sounds like your business, <a href="/about/#contact">get in touch</a>.
+    The first conversation is just that: a conversation.
+  </p>
+</Base>

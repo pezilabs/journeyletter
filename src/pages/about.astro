@@ -1,50 +1,61 @@
 ---
 import Base from '../layouts/Base.astro';
+import { contact } from '../site';
 ---
 <Base
-  title="About — Journeyletter"
-  description="What the Journeyletter is and the four rules it runs under."
+  title="About — Pezi Labs"
+  description="Pezi Labs is a one-person studio run by Tom Murphy, a user experience designer with more than 25 years of experience."
 >
   <h1 style="margin-top:2.5rem;">About</h1>
-  <p>
-    The Journeyletter is field notes on operating AI agents for real work, written for
-    serious agent-builders. It documents one practitioner's stack — the delegation
-    policies, the contracts, the struggles, the reversals — as they actually happen. It
-    is published by <a href="/">Pezi Labs</a> and edited by Tom Murphy.
-  </p>
-  <p>
-    Two lanes, same masthead. <a href="/notes/">Notes</a> is generated from exhaust, then
-    edited — the four rules below describe it exactly. <a href="/letters/">Letters</a> is
-    the opposite origin: Tom's own draft first, structured and edited from there. Both are
-    real, both carry a colophon; they differ in where the first draft came from.
-  </p>
-  <p>The four rules, as they apply to Notes:</p>
-
-  <h2>Exhaust, not authorship</h2>
-  <p>
-    Nobody sits down to "write a post." The work happens; an agent harvests the exhaust —
-    repo history, decision records, session transcripts — and surfaces when there's a
-    piece worth making. A publication that demands homework from its author dies.
+  <p class="piece-lede">
+    Pezi Labs is a one-person studio in New Hampshire. I'm Tom Murphy, and I run it.
   </p>
 
-  <h2>Cadence by accumulation</h2>
+  <h2>Where I come from</h2>
   <p>
-    It publishes when there's something real, not on a calendar. No filler, ever. If you
-    don't hear from it, nothing worth your time happened.
+    I've spent more than 25 years in user experience design: at small startups, at large
+    corporations, in my own freelance business, and most places in between. The thread has
+    been the same the whole way. Find the real pain point, then use design and data to build
+    a better system around it.
+  </p>
+  <p>
+    Early on, the work was mostly the visual layer. Over time, the harder and more valuable
+    part turned out to be understanding complex systems and the organizations that run them.
+    I've always been comfortable straddling the line between engineering and product. The
+    best results I've seen came from working closely across it, staying grounded in what the
+    system can really do, and being willing to compromise to ship.
+  </p>
+  <p>
+    AI changed the math. It now does a growing share of the building, which frees me to focus
+    on what it can't do: sitting shoulder to shoulder with the people who have the problem,
+    and shaping, scoping and delivering the tools they need to forge their own paths.
   </p>
 
-  <h2>The wall</h2>
+  <h2>How the studio works</h2>
   <p>
-    Patterns, struggles, and learnings cross into these pieces. Personal data never does
-    — health, family, and finances stay categorically behind the wall, filtered out at
-    the harvest stage before a draft exists. Field notes, not oversharing.
+    Right now that practice runs at home. I build
+    <a href="/apps/">household applications</a>: small, specific apps for the people I live
+    with, running privately on a computer in my house. Each one starts from a real need. Daily
+    use shows which ones deserve more, and a few are becoming products.
+  </p>
+  <p>
+    I build with AI agents as collaborators, and I write about what that's actually like in
+    the <a href="/writing/">Journeyletter</a>. Every piece ends with a colophon that says
+    which agents did what and what I did.
+  </p>
+  <p>
+    The same practice is <a href="/services/">for hire</a>. I work with owner-run businesses
+    on the problems behind their website.
   </p>
 
-  <h2 id="colophons">Full transparency</h2>
-  <p>
-    Every piece ends with a colophon naming the stack, the agents that did the work, and
-    exactly what the human did. The colophons are structured data, and over time they are
-    the experiment: watch the human's role shrink from author to editor to mentor, piece
-    by piece, with receipts.
+  <h2 id="contact">Get in touch</h2>
+  <ul>
+    {contact.email && <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>}
+    {contact.linkedin && <li><a href={contact.linkedin}>LinkedIn</a>, for the full career history</li>}
+    <li><a href={contact.github}>GitHub</a>, where Pezi Labs work lives</li>
+  </ul>
+  <p style="color:var(--ink-soft); font-size:0.9rem;">
+    Pezi Labs LLC is a New Hampshire limited liability company. Looking for the
+    Journeyletter's editorial rules? They're <a href="/writing/about/">here</a>.
   </p>
 </Base>

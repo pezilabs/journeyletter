@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import UseCaseList from '../../components/UseCaseList.astro';
+import { getCollection } from 'astro:content';
+
+const household = (await getCollection('usecases', (uc) => uc.data.line === 'household')).sort(
+  (a, b) => a.data.title.localeCompare(b.data.title)
+);
+// Grouped by status so the page stays static: products first, retired last.
+const groups = [
+  { label: 'Becoming products', statuses: ['productizing', 'product'] },
+  { label: 'In daily use', statuses: ['in daily use'] },
+  { label: 'Retired', statuses: ['retired'] },
+]
+  .map((g) => ({ ...g, items: household.filter((uc) => g.statuses.includes(uc.data.status)) }))
+  .filter((g) => g.items.length > 0);
+---
+<Base
+  title="Household applications — Pezi Labs"
+  description="Software built for the specific needs of the people in one home, running privately in that home."
+>
+  <h1 style="margin-top:2.5rem;">Household applications</h1>
+  <p class="piece-lede">
+    Software built for the specific needs of the people in one home.
+  </p>
+  <p>
+    The enterprise world has started calling these personal web applications. The idea is the
+    same: someone who understands the material, the space and the need can now build the tool.
+    Every project here is a use case: a real need, what I built for it, and what changed.
+  </p>
+  <p>
+    Mine run on a computer in my house and are reachable only over a private network. They're
+    not on the internet, on purpose. The people who use them are my family, and their data
+    stays home. If you want to see one running, <a href="/about/#contact">ask me</a> and I'll
+    show you.
+  </p>
+
+  {groups.map((g) => (
+    <section>
+      <h2>{g.label}</h2>
+      <UseCaseList items={g.items} base="/apps/" />
+    </section>
+  ))}
+</Base>

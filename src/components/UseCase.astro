@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { render, type CollectionEntry } from 'astro:content';
+import { contact } from '../site';
+
+interface Props {
+  uc: CollectionEntry<'usecases'>;
+}
+const { uc } = Astro.props;
+const { Content } = await render(uc);
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
+const section = uc.data.line === 'household'
+  ? { href: '/apps/', label: 'Household applications' }
+  : { href: '/services/', label: 'Services' };
+---
+<Base title={`${uc.data.title} — Pezi Labs`} description={uc.data.summary}>
+  <article>
+    <p class="piece-meta" style="margin:2.5rem 0 0.5rem;"><a href={section.href}>{section.label}</a></p>
+    <h1>{uc.data.title}</h1>
+    <p class="piece-lede">{uc.data.summary}</p>
+    <dl class="usecase-facts">
+      <dt>For</dt><dd>{uc.data.for}</dd>
+      <dt>Status</dt><dd>{uc.data.status}</dd>
+      {uc.data.started && <><dt>Started</dt><dd>{fmt.format(uc.data.started)}</dd></>}
+      <dt>Built with</dt><dd>{uc.data.stack.join(' · ')}</dd>
+    </dl>
+    <Content />
+    <p class="usecase-cta">
+      Want to see it running? I'll show you.
+      {contact.email
+        ? <a href={`mailto:${contact.email}?subject=${encodeURIComponent(uc.data.title)}`}>Get in touch.</a>
+        : <a href="/about/#contact">Get in touch.</a>}
+    </p>
+  </article>
+</Base>

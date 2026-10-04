@@ -28,4 +28,20 @@ const letters = defineCollection({
   schema: pieceSchema,
 });
 
-export const collections = { notes, letters };
+// Use cases: every project gets one, in whichever section it belongs to
+// (`line`). Depth varies; the core fields are the same for all of them.
+const usecases = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/usecases' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    line: z.enum(['household', 'service']),
+    for: z.string(),
+    status: z.enum(['in daily use', 'productizing', 'product', 'retired']),
+    started: z.coerce.date().optional(),
+    stack: z.array(z.string()),
+    published: z.coerce.date(),
+  }),
+});
+
+export const collections = { notes, letters, usecases };
