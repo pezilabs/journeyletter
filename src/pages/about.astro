@@ -73,11 +73,12 @@ import { contact } from '../site';
         <div class="c-label label mono"><b>03</b><span>Contact</span></div>
         <h2 id="h-cta" class="h2">Get in touch</h2>
         <div class="cta-row">
-          <a class="btn" href={`mailto:${contact.email}`}>{contact.email} <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-solid" href={contact.calendly}>Book a call <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-quiet" href={`mailto:${contact.email}`}>{contact.email} <span class="arrow" aria-hidden="true">→</span></a>
           <a class="mono" href={contact.linkedin}>LinkedIn, for the full career history</a>
           <a class="mono" href={contact.github}>GitHub, where Pezi Labs work lives</a>
         </div>
-        <p class="mono" style="grid-column:4 / -1;margin-top:var(--s5);color:var(--ink-3)">
+        <p class="cta-note mono">
           Pezi Labs LLC is a New Hampshire limited liability company. Looking for the
           Journeyletter's editorial rules? They're <a href="/writing/about/" style="color:var(--ink)">here</a>.
         </p>
