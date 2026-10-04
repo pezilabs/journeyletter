@@ -10,22 +10,7 @@ const { items, footer = false } = Astro.props;
 const grouped = groups
   .map((g) => ({ ...g, rows: items.filter((uc) => (g.statuses as readonly string[]).includes(uc.data.status)) }))
   .filter((g) => g.rows.length > 0);
-const count = (s: string) => items.filter((uc) => uc.data.status === s).length;
-const tally = (['productizing', 'in daily use', 'product', 'retired'] as const)
-  .map((s) => ({ s, n: count(s) }))
-  .filter((t) => t.n > 0);
 ---
-<div class="grid tally-row">
-<div class="tally mono">
-  <dl class="tally-dl" aria-label="Use cases by status">
-    <div class="total"><dt class="vh">Total</dt><dd><span class="n">{pad2(items.length)}</span> use cases</dd></div>
-    {tally.map((t) => (
-      <div><dt class="vh">{t.s}</dt><dd class={`st ${statusClass[t.s]}`}><span><span class="n">{pad2(t.n)}</span> {t.s}</span></dd></div>
-    ))}
-  </dl>
-</div>
-</div>
-
 <table class="index">
   <caption class="vh">Use cases, grouped by status</caption>
   <thead>
