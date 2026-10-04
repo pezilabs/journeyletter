@@ -1,11 +1,10 @@
 ---
-import { catalogue, pad2, href, statusClass, groups, type UseCase } from '../usecases';
+import { catalogue, href, statusClass, groups, type UseCase } from '../usecases';
 
 interface Props {
   items: UseCase[];
-  footer?: boolean;
 }
-const { items, footer = false } = Astro.props;
+const { items } = Astro.props;
 
 const grouped = groups
   .map((g) => ({ ...g, rows: items.filter((uc) => (g.statuses as readonly string[]).includes(uc.data.status)) }))
@@ -21,12 +20,11 @@ const grouped = groups
       <th scope="col" class="c-for">For</th>
       <th scope="col" class="c-status">Status</th>
       <th scope="col" class="c-stack stack">Stack</th>
-      <th scope="col" class="c-start">Started</th>
     </tr>
   </thead>
   {grouped.map((g) => (
     <tbody>
-      <tr class="grp"><th colspan="7" scope="rowgroup" class="mono"><span class={`st ${g.cls}`}>{g.label}</span><span class="cnt">{pad2(g.rows.length)}</span></th></tr>
+      <tr class="grp"><th colspan="6" scope="rowgroup" class="mono"><span class={`st ${g.cls}`}>{g.label}</span></th></tr>
       {g.rows.map((uc) => (
         <tr class="row real">
           <td class="no">{catalogue(uc.data.number)}</td>
@@ -35,12 +33,8 @@ const grouped = groups
           <td class="for">{uc.data.for}</td>
           <td class="status"><span class={`st ${statusClass[uc.data.status]}`}>{uc.data.status}</span></td>
           <td class="stack">{uc.data.stack.join(' · ')}</td>
-          <td class="start">{uc.data.started ? uc.data.started.getUTCFullYear() : ''}</td>
         </tr>
       ))}
     </tbody>
   ))}
 </table>
-{footer && (
-  <div class="idx-foot mono"><span>Grouped by status. Retired work stays listed.</span><a href="/apps/">All household applications <span class="arrow" aria-hidden="true">→</span></a></div>
-)}
