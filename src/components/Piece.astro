@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Colophon from './Colophon.astro';
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  piece: CollectionEntry<'notes'> | CollectionEntry<'letters'>;
+  lane: 'Note' | 'Letter';
+}
+const { piece, lane } = Astro.props;
+const { Content } = await render(piece);
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const laneHref = lane === 'Note' ? '/notes/' : '/letters/';
+---
+<Base
+  title={`${piece.data.title} · Journeyletter`}
+  description={piece.data.description}
+  crumbs={[{ href: '/writing/', label: 'Journeyletter' }, { href: laneHref, label: `${lane}s` }, { label: piece.data.title }]}
+>
+  <article>
+    <header class="piece-head">
+      <div class="wrap">
+        <div class="grid">
+          <p class="meta mono"><b>{lane}</b><time datetime={piece.data.date.toISOString().slice(0, 10)}>{fmt.format(piece.data.date)}</time><span>Tom Murphy</span></p>
+          <h1 class="piece-title">{piece.data.title}</h1>
+          <p class="piece-lede">{piece.data.description}</p>
+        </div>
+      </div>
+    </header>
+    <div class="wrap">
+      <div class="grid">
+        <div class="prose"><Content /></div>
+        <Colophon colophon={piece.data.colophon} />
+      </div>
+    </div>
+  </article>
+</Base>

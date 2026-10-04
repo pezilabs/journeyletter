@@ -1,86 +1,115 @@
 ---
 import Base from '../layouts/Base.astro';
+import UseCaseIndex from '../components/UseCaseIndex.astro';
 import { getCollection } from 'astro:content';
+import { useCases, href } from '../usecases';
 
-const usecases = await getCollection('usecases');
-const household = usecases.filter((uc) => uc.data.line === 'household');
+const all = await useCases();
+const household = all.filter((uc) => uc.data.line === 'household');
 const becoming = household.filter((uc) => uc.data.status === 'productizing');
 const notes = await getCollection('notes');
 const letters = await getCollection('letters');
 
 // Counts are only worth stating once they say something. Below that, the
-// doors describe the work instead of numbering it.
+// cards describe the work instead of numbering it.
 const showCount = household.length >= 10;
+const appsLine = showCount
+  ? `${household.length} use cases so far, ${becoming.length} becoming products.`
+  : `${becoming.length === 1 ? 'One is' : `${becoming.length} are`} becoming a product.`;
 
 const recent = [
-  ...usecases.map((uc) => ({
-    date: uc.data.published,
-    title: uc.data.title,
-    href: `/${uc.data.line === 'household' ? 'apps' : 'services'}/${uc.id}/`,
-    kind: 'Use case',
-  })),
-  ...notes.map((n) => ({ date: n.data.date, title: n.data.title, href: `/notes/${n.id}/`, kind: 'Note' })),
-  ...letters.map((l) => ({ date: l.data.date, title: l.data.title, href: `/letters/${l.id}/`, kind: 'Letter' })),
+  ...all.map((uc) => ({ date: uc.data.published, title: uc.data.title, href: href(uc), kind: 'Use case', uc: true })),
+  ...notes.map((n) => ({ date: n.data.date, title: n.data.title, href: `/notes/${n.id}/`, kind: 'Note', uc: false })),
+  ...letters.map((l) => ({ date: l.data.date, title: l.data.title, href: `/letters/${l.id}/`, kind: 'Letter', uc: false })),
 ]
   .sort((a, b) => b.date.valueOf() - a.date.valueOf())
   .slice(0, 5);
 const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base
-  title="Pezi Labs"
-  description="A one-person studio run by Tom Murphy. Software built from real needs, starting at home."
+  title="Pezi Labs · Tom Murphy"
+  description="Pezi Labs is Tom Murphy's one-person studio: household applications, services for owner-run businesses, and the Journeyletter."
 >
-  <section class="opening">
-    <h1 class="visually-hidden">Pezi Labs</h1>
-    <p>
-      Pezi Labs is my one-person studio. I'm Tom Murphy. For 25 years my job has started the
-      same way: sitting with the people who have the problem, listening until I understand what
-      they actually need, then sketching, prototyping and showing them something real.
-    </p>
-    <p>
-      That part hasn't changed. What changed is that now I build the whole thing. Right now I
-      build it for my own household, and the best of it is becoming products.
-    </p>
-  </section>
-
-  <section class="doors">
-    <div>
-      <h2><a href="/apps/">Household applications</a></h2>
-      <p>
-        Small, specific apps for the people I live with, running privately on a computer in my
-        house.
-        {showCount
-          ? ` ${household.length} use cases so far, ${becoming.length} becoming products.`
-          : ` ${becoming.length === 1 ? 'One is' : `${becoming.length} are`} becoming a product.`}
-      </p>
-    </div>
-    <div>
-      <h2><a href="/services/">Services</a></h2>
-      <p>
-        I work with owner-run businesses on the problems behind the website: bookings,
-        inventory, the spreadsheet everyone is afraid to touch.
-      </p>
-    </div>
-    <div>
-      <h2><a href="/writing/">Writing</a></h2>
-      <p>
-        The Journeyletter. Field notes on running AI agents for real work, and letters I draft
-        by hand. {notes.length + letters.length} pieces so far.
-      </p>
+  <section class="opening" aria-labelledby="h-opening">
+    <div class="wrap">
+      <div class="grid">
+        <h1 id="h-opening" class="vh">Pezi Labs</h1>
+        <dl class="facts mono">
+          <div class="label"><b>01</b><span>Studio</span></div>
+          <dt>Studio</dt><dd>Pezi Labs LLC</dd>
+          <dt>Person</dt><dd>Tom Murphy</dd>
+          <dt>Practice</dt><dd>UX, 25 years</dd>
+          <dt>Based</dt><dd>New Hampshire</dd>
+        </dl>
+        <div class="prose-xl">
+          <p><strong>Pezi Labs is my one-person studio. I'm Tom Murphy.</strong> For 25 years my job has started the same way: sitting with the people who have the problem, listening until I understand what they actually need, then sketching, prototyping and showing them something real.</p>
+          <p>That part hasn't changed. What changed is that now I build the whole thing. Right now I build it for my own household, and the best of it is becoming products.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Recent</h2>
-    <ul class="piece-list">
-      {recent.map((item) => (
-        <li>
-          <span class="piece-date">{fmt.format(item.date)} · {item.kind}</span>
-          <a class="piece-title" href={item.href}>{item.title}</a>
-        </li>
-      ))}
-    </ul>
+  <section class="section" aria-labelledby="h-practice">
+    <div class="wrap">
+      <div class="grid section-head">
+        <div class="c-label label mono"><b>02</b><span>Practice</span></div>
+        <h2 id="h-practice" class="vh">What the studio does</h2>
+      </div>
+      <div class="grid">
+        <div class="practice">
+          <article class="card">
+            <div class="idx mono"><span>02.1</span><span>Apps</span></div>
+            <h3><a href="/apps/">Household applications</a></h3>
+            <p>Small, specific apps for the people I live with, running privately on a computer in my house. {appsLine}</p>
+            <div class="go mono"><span>Index of use cases</span><span class="arrow" aria-hidden="true">→</span></div>
+          </article>
+          <article class="card">
+            <div class="idx mono"><span>02.2</span><span>Services</span></div>
+            <h3><a href="/services/">Services</a></h3>
+            <p>I work with owner-run businesses on the problems behind the website: bookings, inventory, the spreadsheet everyone is afraid to touch.</p>
+            <div class="go mono"><span>How engagements run</span><span class="arrow" aria-hidden="true">→</span></div>
+          </article>
+          <article class="card">
+            <div class="idx mono"><span>02.3</span><span>Writing</span></div>
+            <h3><a href="/writing/">Writing</a></h3>
+            <p>The Journeyletter. Field notes on running AI agents for real work, and letters I draft by hand. {notes.length + letters.length} pieces so far.</p>
+            <div class="go mono"><span>The Journeyletter</span><span class="arrow" aria-hidden="true">→</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <p><a href="/about/">More about me and how I work.</a></p>
+  <section class="section" id="index" aria-labelledby="h-index">
+    <div class="wrap">
+      <div class="grid section-head">
+        <div class="c-label label mono"><b>03</b><span>Index</span></div>
+        <h2 id="h-index" class="c-main h2">Use cases</h2>
+      </div>
+      <UseCaseIndex items={household} footer />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="h-recent">
+    <div class="wrap">
+      <div class="grid section-head">
+        <div class="c-label label mono"><b>04</b><span>Log</span></div>
+        <h2 id="h-recent" class="c-main h2">Recent</h2>
+      </div>
+      <ol class="recent">
+        {recent.map((r) => (
+          <li><a href={r.href}><time class="d mono" datetime={iso(r.date)}>{fmt.format(r.date)}</time><span class={`k mono${r.uc ? ' uc' : ''}`}>{r.kind}</span><span class="t"><span>{r.title}</span></span><span class="arrow" aria-hidden="true">→</span></a></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-label="About">
+    <div class="wrap">
+      <div class="grid">
+        <a class="more" href="/about/">More about me and how I work. <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
 </Base>

@@ -1,35 +1,92 @@
 ---
 import Base from '../layouts/Base.astro';
-import { render, type CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
 import { contact } from '../site';
+import { catalogue, href, statusClass, useCases, type UseCase } from '../usecases';
 
 interface Props {
-  uc: CollectionEntry<'usecases'>;
+  uc: UseCase;
 }
 const { uc } = Astro.props;
 const { Content } = await render(uc);
-const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
-const section = uc.data.line === 'household'
+const d = uc.data;
+
+const section = d.line === 'household'
   ? { href: '/apps/', label: 'Household applications' }
   : { href: '/services/', label: 'Services' };
+
+// Lifecycle track for anything still alive; retired work just shows its status.
+const steps = ['in daily use', 'productizing', 'product'] as const;
+const at = steps.indexOf(d.status as (typeof steps)[number]);
+
+const siblings = await useCases(d.line);
+const i = siblings.findIndex((s) => s.id === uc.id);
+const next = siblings[i + 1];
+const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
+const no = catalogue(d.number);
 ---
-<Base title={`${uc.data.title} — Pezi Labs`} description={uc.data.summary}>
-  <article>
-    <p class="piece-meta" style="margin:2.5rem 0 0.5rem;"><a href={section.href}>{section.label}</a></p>
-    <h1>{uc.data.title}</h1>
-    <p class="piece-lede">{uc.data.summary}</p>
-    <dl class="usecase-facts">
-      <dt>For</dt><dd>{uc.data.for}</dd>
-      <dt>Status</dt><dd>{uc.data.status}</dd>
-      {uc.data.started && <><dt>Started</dt><dd>{fmt.format(uc.data.started)}</dd></>}
-      <dt>Built with</dt><dd>{uc.data.stack.join(' · ')}</dd>
-    </dl>
-    <Content />
-    <p class="usecase-cta">
-      Want to see it running? I'll show you.
-      {contact.email
-        ? <a href={`mailto:${contact.email}?subject=${encodeURIComponent(uc.data.title)}`}>Get in touch.</a>
-        : <a href="/about/#contact">Get in touch.</a>}
-    </p>
-  </article>
+<Base
+  title={`${d.title} · ${section.label} · Pezi Labs`}
+  description={d.summary}
+  crumbs={[{ href: '/', label: 'Pezi Labs' }, { href: section.href, label: section.label }, { label: d.title }]}
+>
+  <section class="hero" aria-labelledby="h-title">
+    <div class="wrap">
+      <div class="grid">
+        <p class="eyebrow mono"><span>Use case {no}</span><a href={section.href}>{section.label}</a></p>
+        <h1 id="h-title" class="uc-title">{d.title}</h1>
+        <p class="summary">{d.summary}</p>
+
+        <aside class="spec mono" aria-label="Facts">
+          <div class="spec-h"><strong>Spec sheet</strong><span>UC-{no}</span></div>
+          <dl>
+            <dt>For</dt>
+            <dd>{d.for}</dd>
+            <dt>Status</dt>
+            <dd>
+              <span class={`st ${statusClass[d.status]}`}>{d.status}</span>
+              {at >= 0 && (
+                <ol class="life" aria-label="Lifecycle">
+                  {steps.map((s, n) => (
+                    <li class={n < at ? 'done' : undefined} aria-current={n === at ? 'step' : undefined}>{s[0].toUpperCase() + s.slice(1)}</li>
+                  ))}
+                </ol>
+              )}
+            </dd>
+            {d.started && <><dt>Started</dt><dd>{fmt.format(d.started)}</dd></>}
+            <dt>Built with</dt>
+            <dd><ul>{d.stack.map((s) => <li>{s}</li>)}</ul></dd>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="grid uc-prose">
+      <Content />
+    </div>
+  </div>
+
+  <section class="section cta" aria-labelledby="h-cta">
+    <div class="wrap">
+      <div class="grid">
+        <div class="c-label label mono"><b>→</b><span>Contact</span></div>
+        <h2 id="h-cta" class="h2">Want to see it running? I'll show you.</h2>
+        <div class="cta-row">
+          <a class="btn" href={`mailto:${contact.email}?subject=${encodeURIComponent(d.title)}`}>Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+          <span class="mono">{contact.email}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pager" aria-label="Use cases">
+    <div class="wrap">
+      <div class="grid">
+        <a class="prev" href={section.href}><span class="mono">← Back to</span><span>{section.label}</span></a>
+        {next && <a class="next" href={href(next)}><span class="mono">Next · {catalogue(next.data.number)}</span><span>{next.data.title}</span></a>}
+      </div>
+    </div>
+  </nav>
 </Base>

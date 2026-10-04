@@ -1,35 +1,41 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import PageHead from '../../components/PageHead.astro';
+import PieceList from '../../components/PieceList.astro';
+import { pieces } from '../../pieces';
 
-const pieces = [
-  ...(await getCollection('notes')).map((p) => ({ ...p, lane: 'Note', base: '/notes/' })),
-  ...(await getCollection('letters')).map((p) => ({ ...p, lane: 'Letter', base: '/letters/' })),
-].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const fmt = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+const items = await pieces();
 ---
 <Base
-  title="Journeyletter — Pezi Labs"
+  title="Journeyletter · Pezi Labs"
   description="Field notes on operating AI agents for real work, and letters drafted by hand."
 >
-  <h1 style="margin-top:2.5rem;">Journeyletter</h1>
-  <p class="piece-lede">
-    Field notes on operating AI agents for real work, and letters I draft by hand.
-  </p>
-  <p>
-    Two lanes, same masthead. <a href="/notes/">Notes</a> start from the exhaust of real work
-    and get edited. <a href="/letters/">Letters</a> start as my own draft and get structured.
-    Every piece ends with a colophon naming the stack, the agents, and what I did.
-    <a href="/writing/about/">How it works</a> · RSS for <a href="/notes/rss.xml">Notes</a>
-    and <a href="/letters/rss.xml">Letters</a>.
-  </p>
-  <ul class="piece-list">
-    {pieces.map((p) => (
-      <li>
-        <span class="piece-date">{fmt.format(p.data.date)} · {p.lane}</span>
-        <a class="piece-title" href={`${p.base}${p.id}/`}>{p.data.title}</a>
-        <p class="piece-desc">{p.data.description}</p>
-      </li>
-    ))}
-  </ul>
+  <PageHead
+    num="Writing"
+    label="Journeyletter"
+    title="Journeyletter"
+    lede="Field notes on operating AI agents for real work, and letters I draft by hand."
+  />
+
+  <section class="section" aria-labelledby="h-lanes">
+    <div class="wrap">
+      <div class="grid block">
+        <div class="c-label label mono"><b>01</b><span>Two lanes</span></div>
+        <h2 id="h-lanes" class="vh">Two lanes</h2>
+        <div class="copy">
+          <p>
+            Two lanes, same masthead. <a href="/notes/">Notes</a> start from the exhaust of real
+            work and get edited. <a href="/letters/">Letters</a> start as my own draft and get
+            structured. Every piece ends with a colophon naming the stack, the agents, and what I
+            did. <a href="/writing/about/">How it works</a>.
+          </p>
+        </div>
+      </div>
+      <div class="grid section-head" style="margin-top:var(--s6)">
+        <div class="c-label label mono"><b>02</b><span>Archive</span></div>
+        <p class="c-main mono" style="color:var(--ink-3)">{items.length} pieces · RSS for <a href="/notes/rss.xml" style="color:var(--ink)">Notes</a> and <a href="/letters/rss.xml" style="color:var(--ink)">Letters</a></p>
+      </div>
+      <PieceList items={items} />
+    </div>
+  </section>
 </Base>

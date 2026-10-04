@@ -1,4 +1,6 @@
 ---
+// The Journeyletter's signature: structured provenance at the end of every
+// piece, set as a spec sheet.
 interface Props {
   colophon: {
     stack: string[];
@@ -8,18 +10,18 @@ interface Props {
 }
 const { colophon } = Astro.props;
 ---
-<aside class="colophon">
-  <h2><a href="/writing/about/#colophons" style="color:inherit; text-decoration:none;">Colophon</a></h2>
+<aside class="colophon mono" aria-label="Colophon">
+  <div class="spec-h"><a href="/writing/about/#colophons">Colophon</a><span>Who did what</span></div>
   <dl>
     <dt>Stack</dt>
     <dd>{colophon.stack.join(' · ')}</dd>
     {colophon.agents.map((agent) => (
       <>
-        <dt>Agent — <span class="role-name">{agent.name}</span></dt>
+        <dt>Agent<span class="who">{agent.name}</span></dt>
         <dd>{agent.role}</dd>
       </>
     ))}
-    <dt>Human — <span class="role-name">{colophon.human.name}</span></dt>
+    <dt>Human<span class="who">{colophon.human.name}</span></dt>
     <dd>{colophon.human.role}</dd>
   </dl>
 </aside>

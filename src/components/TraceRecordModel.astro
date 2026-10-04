@@ -1,0 +1,154 @@
+---
+// Fig. 1 on the Trace use case: the record model, drawn with placeholder
+// medications. Schematic only; no real data.
+---
+<figure class="fig" aria-labelledby="fig1-cap">
+          <div class="plate">
+            <span class="rm" aria-hidden="true"></span>
+            <div class="plate-h mono"><strong>Fig. 1&nbsp;&nbsp;Record model</strong><span>Schematic · 12 weeks · not real data</span></div>
+            <div class="plate-body">
+
+              <!-- Wide diagram: time runs left to right -->
+              <svg class="diagram d-wide" viewBox="0 34 1200 406" role="img" aria-labelledby="d1t d1d">
+                <title id="d1t">Diagram: a medication timeline with notes and documents anchored to it</title>
+                <desc id="d1d">Three medications run as bars across twelve weeks. Each start, stop or dose change carries a marker with its reason. Three symptom notes drop dotted lines onto whichever medications were active at that moment. One document links to the medication change it describes.</desc>
+
+                <!-- lanes -->
+                <g>
+                  <line class="lane" x1="170" y1="64" x2="1190" y2="64"/>
+                  <line class="lane" x1="170" y1="168" x2="1190" y2="168"/>
+                  <line class="lane" x1="170" y1="228" x2="1190" y2="228"/>
+                  <line class="lane" x1="170" y1="288" x2="1190" y2="288"/>
+                  <line class="lane" x1="170" y1="356" x2="1190" y2="356"/>
+                </g>
+                <g>
+                  <text class="lane-name" x="0" y="69">Symptom notes</text><text class="lane-sub" x="0" y="86">stamped</text>
+                  <text class="lane-name" x="0" y="173">Medication A</text><text class="lane-sub" x="0" y="190">with reasons</text>
+                  <text class="lane-name" x="0" y="233">Medication B</text>
+                  <text class="lane-name" x="0" y="293">Medication C</text>
+                  <text class="lane-name" x="0" y="361">Documents</text><text class="lane-sub" x="0" y="378">linked</text>
+                </g>
+
+                <!-- axis -->
+                <line class="axis" x1="180" y1="404" x2="1159" y2="404"/>
+                <g class="axis">
+                  <line x1="180" y1="398" x2="180" y2="404"/><line x1="269" y1="398" x2="269" y2="404"/><line x1="358" y1="398" x2="358" y2="404"/><line x1="447" y1="398" x2="447" y2="404"/><line x1="536" y1="398" x2="536" y2="404"/><line x1="625" y1="398" x2="625" y2="404"/><line x1="714" y1="398" x2="714" y2="404"/><line x1="803" y1="398" x2="803" y2="404"/><line x1="892" y1="398" x2="892" y2="404"/><line x1="981" y1="398" x2="981" y2="404"/><line x1="1070" y1="398" x2="1070" y2="404"/><line x1="1159" y1="398" x2="1159" y2="404"/>
+                </g>
+                <g class="tick" text-anchor="middle">
+                  <text x="180" y="426">W01</text><text x="269" y="426">W02</text><text x="358" y="426">W03</text><text x="447" y="426">W04</text><text x="536" y="426">W05</text><text x="625" y="426">W06</text><text x="714" y="426">W07</text><text x="803" y="426">W08</text><text x="892" y="426">W09</text><text x="981" y="426">W10</text><text x="1070" y="426">W11</text><text x="1159" y="426">W12</text>
+                </g>
+                <text class="tick" x="0" y="426">Week</text>
+
+                <!-- medication bars -->
+                <rect class="bar" x="180" y="162" width="445" height="12"/>
+                <rect class="bar" x="625" y="165" width="267" height="6"/>
+                <rect class="bar" x="536" y="222" width="623" height="12"/>
+                <line class="tail" x1="1162" y1="228" x2="1192" y2="228"/>
+                <rect class="bar" x="180" y="282" width="267" height="12"/>
+
+                <!-- symptom notes, anchored to what was being taken -->
+                <line class="anchor" x1="358" y1="72" x2="358" y2="288"/>
+                <line class="anchor" x1="803" y1="72" x2="803" y2="228"/>
+                <line class="anchor" x1="1070" y1="72" x2="1070" y2="228"/>
+                <circle class="hit" cx="358" cy="168" r="4.5"/><circle class="hit" cx="358" cy="288" r="4.5"/>
+                <circle class="hit" cx="803" cy="168" r="4.5"/><circle class="hit" cx="803" cy="228" r="4.5"/>
+                <circle class="hit" cx="1070" cy="228" r="4.5"/>
+                <circle class="d-note" cx="358" cy="64" r="7"/>
+                <circle class="d-note" cx="803" cy="64" r="7"/>
+                <circle class="d-note" cx="1070" cy="64" r="7"/>
+                <text class="stamp" x="372" y="68">taking A + C</text>
+                <text class="stamp" x="817" y="68">taking A + B</text>
+                <text class="stamp" x="1084" y="68">taking B</text>
+
+                <!-- document linked to the event it describes -->
+                <path class="link" d="M536 346 C 536 318, 452 318, 449 298"/>
+                <path class="doc" d="M528 346 h12 l5 5 v17 h-17 z"/>
+                <path class="doc" d="M540 346 v5 h5"/>
+                <text class="d-tag" x="556" y="361">Visit summary</text>
+
+                <!-- changes, each carrying its reason -->
+                <polygon class="mk" points="447,281 454,288 447,295 440,288"/>
+                <text class="d-tag" x="462" y="284">Stopped</text><text class="why" x="462" y="300">Reason: side effects</text>
+
+                <polygon class="mk" points="536,221 543,228 536,235 529,228"/>
+                <text class="d-tag" x="546" y="196">Started</text><text class="why" x="546" y="212">Reason: replaces C</text>
+
+                <polygon class="mk" points="625,161 632,168 625,175 618,168"/>
+                <text class="d-tag" x="635" y="132">Dose lowered</text><text class="why" x="635" y="148">Reason: advice</text>
+
+                <polygon class="mk" points="892,161 899,168 892,175 885,168"/>
+                <text class="d-tag" x="902" y="132">Stopped</text><text class="why" x="902" y="148">Reason: finished</text>
+              </svg>
+
+              <!-- Narrow diagram: time runs top to bottom -->
+              <svg class="diagram d-narrow" viewBox="0 0 320 560" role="img" aria-labelledby="d2t d2d">
+                <title id="d2t">Diagram: a medication timeline with notes and documents anchored to it</title>
+                <desc id="d2d">Time runs downward over twelve weeks. Three medications, A, B and C, run as vertical bars. Numbered markers show each change and its reason. Three symptom notes connect to whichever medications were active. One document links to the change it describes.</desc>
+
+                <g class="hd" text-anchor="middle">
+                  <text x="72" y="30">A</text><text x="104" y="30">B</text><text x="136" y="30">C</text><text x="172" y="30">Doc</text><text x="212" y="30">Notes</text>
+                </g>
+                <line class="lane" x1="56" y1="42" x2="304" y2="42"/>
+
+                <line class="axis" x1="40" y1="60" x2="40" y2="522"/>
+                <g class="tick">
+                  <text x="0" y="63">W01</text><text x="0" y="105">W02</text><text x="0" y="147">W03</text><text x="0" y="189">W04</text><text x="0" y="231">W05</text><text x="0" y="273">W06</text><text x="0" y="315">W07</text><text x="0" y="357">W08</text><text x="0" y="399">W09</text><text x="0" y="441">W10</text><text x="0" y="483">W11</text><text x="0" y="525">W12</text>
+                </g>
+
+                <rect class="bar" x="66" y="60" width="12" height="210"/>
+                <rect class="bar" x="69" y="270" width="6" height="126"/>
+                <rect class="bar" x="98" y="228" width="12" height="294"/>
+                <line class="tail" x1="104" y1="526" x2="104" y2="552"/>
+                <rect class="bar" x="130" y="60" width="12" height="126"/>
+
+                <line class="anchor" x1="205" y1="144" x2="72" y2="144"/>
+                <line class="anchor" x1="205" y1="354" x2="72" y2="354"/>
+                <line class="anchor" x1="205" y1="480" x2="104" y2="480"/>
+                <circle class="hit" cx="72" cy="144" r="4.5"/><circle class="hit" cx="136" cy="144" r="4.5"/>
+                <circle class="hit" cx="72" cy="354" r="4.5"/><circle class="hit" cx="104" cy="354" r="4.5"/>
+                <circle class="hit" cx="104" cy="480" r="4.5"/>
+                <circle class="d-note" cx="212" cy="144" r="7"/>
+                <circle class="d-note" cx="212" cy="354" r="7"/>
+                <circle class="d-note" cx="212" cy="480" r="7"/>
+                <text class="stamp" x="226" y="148">A + C</text>
+                <text class="stamp" x="226" y="358">A + B</text>
+                <text class="stamp" x="226" y="484">B</text>
+
+                <path class="link" d="M164 228 C 150 228, 140 212, 138 194"/>
+                <path class="doc" d="M164 218 h10 l4 4 v15 h-14 z"/>
+                <path class="doc" d="M174 218 v4 h4"/>
+
+                <polygon class="mk" points="136,179 143,186 136,193 129,186"/>
+                <text class="num" x="124" y="190" text-anchor="end">1</text>
+                <polygon class="mk" points="104,221 111,228 104,235 97,228"/>
+                <text class="num" x="92" y="225" text-anchor="end">2</text>
+                <polygon class="mk" points="72,263 79,270 72,277 65,270"/>
+                <text class="num" x="60" y="274" text-anchor="end">3</text>
+                <polygon class="mk" points="72,389 79,396 72,403 65,396"/>
+                <text class="num" x="60" y="400" text-anchor="end">4</text>
+              </svg>
+              <ol class="d-key mono" aria-label="Changes and their reasons">
+                <li><b>1</b><span>C stopped. Reason: side effects</span></li>
+                <li><b>2</b><span>B started. Reason: replaces C</span></li>
+                <li><b>3</b><span>A dose lowered. Reason: advice</span></li>
+                <li><b>4</b><span>A stopped. Reason: finished</span></li>
+              </ol>
+            </div>
+
+            <dl class="legend mono">
+              <div>
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><polygon points="8,1 15,8 8,15 1,8" fill="var(--signal)"/></svg>
+                <dt>Change</dt><dd>Every medication change carries its reason.</dd>
+              </div>
+              <div>
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5" fill="var(--paper-2)" stroke="var(--signal)" stroke-width="2"/></svg>
+                <dt>Symptom note</dt><dd>Every symptom note is stamped with what was being taken at that moment.</dd>
+              </div>
+              <div>
+                <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5 h7 l3.5 3.5 v9.5 h-10.5 z" fill="none" stroke="var(--ink)" stroke-width="1.25"/></svg>
+                <dt>Document</dt><dd>Documents link to the events they describe.</dd>
+              </div>
+            </dl>
+          </div>
+          <figcaption id="fig1-cap" class="caption mono"><b>Fig. 1</b><span>Nothing is recorded alone. A schematic of the record model, drawn with placeholder medications. Screenshots on fixture data will sit in this same plate.</span></figcaption>
+        </figure>
